@@ -16,7 +16,7 @@ interface Batsman {
         println("Score: $score, Batsman Ranking: $batsmanRanking")
     }
 
-    fun retrieveBatsmanRanking(): Int
+    fun getRanking(): Int = batsmanRanking
 }
 interface Bowler
 {
@@ -29,33 +29,23 @@ interface Bowler
 
     }
 
-    fun retrieveBowlerRanking(): Int
+    fun getRanking(): Int = bowlerRanking
 }
 
-class AllRounder(name: String, age: Int, nationality: String) : Cricketer(name, age, nationality), Batsman, Bowler{
-
+class AllRounder(name: String, age: Int, nationality: String) : Cricketer(name, age, nationality), Batsman, Bowler {
     override var score: Int = 0
     override var batsmanRanking: Int = 0
     override var wickets: Int = 0
     override var bowlerRanking: Int = 0
-    var ranking: Int = 0
 
-    override fun print()
-    {
+    override fun print() {
         super.print()
-        printBatsmanDetails()
-        printBowlerDetails()
+    }
+    override fun getRanking(): Int {
+        // Assuming the ranking for an all-rounder is an average of batsman and bowler rankings
+        return (batsmanRanking + bowlerRanking) / 2
     }
 
-    override fun retrieveBatsmanRanking(): Int
-    {
-        return batsmanRanking
-    }
-
-    override fun retrieveBowlerRanking(): Int
-    {
-        return bowlerRanking
-    }
 }
 
 fun main()
@@ -65,10 +55,9 @@ fun main()
     allRounder.batsmanRanking = 4
     allRounder.bowlerRanking = 3
     allRounder.wickets = 5
-    allRounder.ranking = 4
-
-    allRounder.print()
 
 
+    println("AllRounder's ranking ${allRounder.getRanking()}")
 
+    println(allRounder.batsmanRanking)
 }
